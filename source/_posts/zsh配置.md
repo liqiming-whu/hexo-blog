@@ -20,56 +20,71 @@ sudo apt install zsh  # 以ubuntu为例
 
 * 首先配置zsh，自定义安装路径
 
-> ./configure --prefix=$HOME/.local  
+```./configure --prefix=$HOME/.local```  
 
 * 然后编译
 
->  make -j4
+```make -j4```
 
 * 检查编译是否成功
 
-> make check
+```make check```
 
 * 如果没有编译错误，则安装zsh
 
-> make install -j4
+```make install -j4```
 
 ### 2.将zsh设置为默认shell
 
-* 如果使用root权限安装的zsh，直接终端运行```chsh -s $(which zsh)```即可。
+如果使用root权限安装的zsh，直接终端运行```chsh -s $(which zsh)```即可。
 
-* 如果没有root权限，通过源码安装zsh的话，则解决方法是在每次打开终端时执行```exec <zsh-path>```来替代当前的shell。在文件```.bash_profile```中加入：
+如果没有root权限，通过源码安装zsh的话，则解决方法是在每次打开终端时执行```exec <zsh-path>```来替代当前的shell。在文件```.bash_profile```中加入：
 
-> [ -f $HOME/.local/bin/zsh ] && exec $HOME/.local/bin/zsh -l
+```[ -f $HOME/.local/bin/zsh ] && exec $HOME/.local/bin/zsh -l```
 
-* 如果上述两种方法都不能修改默认shell，安装 oh-my-zsh，安装时会自动切换shell成zsh。
+如果上述两种方法都不能修改默认shell，安装 oh-my-zsh，安装时会自动切换shell成zsh。
 
 ### 3.安装oh-my-zsh
 
-ArchLinux用户直接```yay -S oh-my-zsh```就完了。
+ArchLinux用户直接```yay -S oh-my-zsh-git```就完了。
 
-* 通过curl
+{% tabs 安装ohmyzsh %}
+  <!-- tab 通过curl安装 -->
+	```sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"```
+  <!-- endtab -->
 
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
+  <!-- tab 通过wget安装 -->
+	```sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"```
+  <!-- endtab -->
 
-* 或者通过wget
+{% endtabs %}
 
-```bash
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
+如果上述方法出现问题，可以按照下面的方法进行：
 
-* 如果上述方法出现问题，可以按照下面的方法进行：
+{% tabs git安装ohmyzsh %}
+  <!-- tab 通过git安装 -->
 
-```bash
-cd ~
-git clone https://github.com/ohmyzsh/ohmyzsh.git
-# 或
-git clone https://gitee.com/lu_x/ohmyzsh.git
-mv ohmyzsh .oh-my-zsh
+```shell
+cd ~ && \
+git clone https://github.com/ohmyzsh/ohmyzsh.git && \
+mv ohmyzsh .oh-my-zsh && \
 cp .oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 ```
+
+  <!-- endtab -->
+
+  <!-- tab 通过gitee安装 -->
+
+```
+cd ~ && \
+git clone https://gitee.com/lu_x/ohmyzsh.git && \
+mv ohmyzsh .oh-my-zsh && \
+cp .oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+```
+
+  <!-- endtab -->
+
+{% endtabs %}
 
 ### 4.配置oh-my-zsh
 
@@ -99,16 +114,31 @@ plugins=(
 
 其中插件zsh-syntax-highlighting和zsh-autosuggestions需要单独下载，方法如下：
 
-```bash
+{% tabs 安装插件 %}
+  <!-- tab 通过git安装 -->
+
+```shell
 # 下载zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# 或
-git clone https://gitee.com/gulei666/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # 下载zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# 或
+```
+
+  <!-- endtab -->
+
+  <!-- tab 通过gitee安装 -->
+
+```shell
+# 下载zsh-syntax-highlighting
+git clone https://gitee.com/gulei666/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# 下载zsh-autosuggestions
 git clone https://gitee.com/githubClone/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
+
+  <!-- endtab -->
+
+{% endtabs %}
+
 
 ### 6.主题配置
 
@@ -116,14 +146,30 @@ git clone https://gitee.com/githubClone/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/
 
 下载```mytheme.zsh-theme.txt```，重命名```mytheme.zsh-theme```于```~/.oh-my-zsh/themes```，在```~/.zshrc```中声明```ZSH_THEME="mytheme"```,然后```source ~/.zshrc```
 
+{% tabs 下载主题 %}
+  <!-- tab 通过git安装 -->
+
 ```bash
-git clone https://github.com/liqiming-whu/memorandum
-# 或
-git clone https://gitee.com/liqiming_whu/memorandum
-cp memorandum/mytheme.zsh-theme.txt ~/.oh-my-zsh/themes/mytheme.zsh-theme
-vim ~/.zshrc
+git clone https://github.com/liqiming-whu/memorandum && \
+cp memorandum/mytheme.zsh-theme.txt ~/.oh-my-zsh/themes/mytheme.zsh-theme && \
+vim ~/.zshrc && \
 source ~/.zshrc
 ```
+
+  <!-- endtab -->
+
+  <!-- tab 通过gitee安装 -->
+
+```
+git clone https://gitee.com/liqiming_whu/memorandum && \
+cp memorandum/mytheme.zsh-theme.txt ~/.oh-my-zsh/themes/mytheme.zsh-theme && \
+vim ~/.zshrc && \
+source ~/.zshrc
+```
+
+  <!-- endtab -->
+
+{% endtabs %}
 
 ---
 
@@ -198,7 +244,7 @@ PROMPT='%{$fg_bold[red]%}-> %{$fg_bold[magenta]%}%n%{$fg_bold[cyan]%}@%{$fg[gree
 
 修改这一行：
 
-> PROMPT='${ret_status}%{$fg[magenta]%}%n@%{$fg[green]%}%m %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+```PROMPT='${ret_status}%{$fg[magenta]%}%n@%{$fg[green]%}%m %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'```
 
 文件全部内容：
 
@@ -215,6 +261,6 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
 在 ```~/.zshrc``` 文件中设置主题为 ```random``` 即可开启随机主题，每次打开新的终端的时候，zsh 都会随机使用一个主题。
 
-> ZSH_THEME="random"
+```ZSH_THEME="random"```
 
 

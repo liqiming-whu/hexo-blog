@@ -3,7 +3,7 @@ title: 配置你的vim，让它成为能用的编辑器
 date: 2021-03-31 2:16:29
 tags: 原创
 categories: linux
-description: 众所周知，很多服务器上的至今仍然装着vim7，如果没有基本的配置，vim是很难用的。比如默认8个空格的缩进，很容易导致空格和Tab混用。所以学习vim，需要先从配置开始。
+description: 很多服务器上的至今仍然装着vim7，没有基本的配置，vim是很难用的，经常会遇到空格和tab混用的问题。使用vim，需要先从配置开始。
 ---
 
 ## 学习Linux，从vim配置开始：
@@ -20,24 +20,53 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 由于github处于骑墙状态有时候没法连接，所以：
 
+{% tabs 安装vim-plug %}
+  <!-- tab 通过git安装 -->
+
 ```bash
-git clone https://github.com/junegunn/vim-plug
-# 或者
-git clone https://gitee.com/chenxinliang123/vim-plug
-mkdir -p ~/.vim/autoload
+git clone https://github.com/junegunn/vim-plug && \
+mkdir -p ~/.vim/autoload && \
 cp vim-plug/plug.vim ~/.vim/autoload
 ```
+
+  <!-- endtab -->
+
+  <!-- tab 通过gitee安装 -->
+
+```sh
+git clone https://gitee.com/chenxinliang123/vim-plug && \
+mkdir -p ~/.vim/autoload && \
+cp vim-plug/plug.vim ~/.vim/autoload
+```
+
+  <!-- endtab -->
+
+{% endtabs %}
 
 ### 2.重命名vimrc.txt为.vimrc于~/
 
 这里可以clone我的配置：
 
+{% tabs 下载配文件 %}
+  <!-- tab 通过git -->
+
 ```bash
-git clone https://github.com/liqiming-whu/memorandum
-# 或者
-git clone https://gitee.com/liqiming_whu/memorandum
+git clone https://github.com/liqiming-whu/memorandum && \
 cp memorandum/vimrc.txt ~/.vimrc
 ```
+
+  <!-- endtab -->
+
+  <!-- tab 通过gitee -->
+
+```sh
+git clone https://gitee.com/liqiming_whu/memorandum && \
+cp memorandum/vimrc.txt ~/.vimrc
+```
+
+  <!-- endtab -->
+
+{% endtabs %}
 
 ### 3.安装插件
 
