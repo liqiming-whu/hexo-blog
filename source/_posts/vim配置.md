@@ -128,7 +128,7 @@ sudo cp -r ~/.config  /root
 
 需要vim > 8.0才能用
 
-```bash
+```Vimscript
 " vim plug插件管理
 call plug#begin('~/.vim/plugged')
 
@@ -344,9 +344,9 @@ set gdefault
 set pastetoggle=<F7>
 ```
 
-另有vim7可用的无中文注释版本，软件版本比较旧的服务器可用
+另有vim7可用版本，软件版本比较旧的服务器可用
 
-```bash
+```Vimscript
 call plug#begin('~/.vim/plugged')
 
 Plug 'joshdick/onedark.vim'
