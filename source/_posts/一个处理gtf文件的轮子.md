@@ -13,7 +13,7 @@ description: 如果你只需要把gtf转成bed12，下载ucsc的两个软件gene
 bioconda上的ucsc软件都是几万年前的老版本，所以最好直接去[ucsc](http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/）
 )下载：
 
-```sh
+```bash
 wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred
 wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/genePredToBed
 chmod +x genePredToBed gtfToGenePred
@@ -21,7 +21,7 @@ chmod +x genePredToBed gtfToGenePred
 
 然后：
 
-```shell
+```bash
 ./gtfToGenePred gencode.v32.annotation.gtf hg38.genePhred && ./genePredToBed hg38.genePhred hg38.bed12 && rm hg38.genePhred 
 ```
 
@@ -29,19 +29,19 @@ chmod +x genePredToBed gtfToGenePred
 
 我们需要两个软件，用conda装就完事了，也可以clone源码安装最新版。
 
-```shell
+```bash
 conda install -c bioconda bedtools bedops
 ```
 
 ### gtf转gene.bed
 
-```sh
+```bash
 awk '{if($3=="gene")print $0" transcript_id \"\";"}' gencode.v32.annotation.gtf | convert2bed -i gtf | cut -f1-6 > hg38.gene.bed
 ```
 
 也可以不装bedops，会稍微麻烦一点：
 
-```shell
+```bash
 awk '{OFS="\t"}{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.gene.bed
 ```
 
@@ -51,7 +51,7 @@ awk '{OFS="\t"}{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[
 
 gtf转transcript不能用convert2bed了，convert2bed转出来的第三列是gene_id，我们要的是transcript_id。
 
-```shell
+```bash
 awk '{OFS="\t"}{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.transcript.bed
 ```
 
@@ -59,7 +59,7 @@ awk '{OFS="\t"}{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $
 
 严格来说，exon和intron是transcript的基本单位，第三列要用transcript_id。
 
-```sh
+```bash
 awk '{OFS="\t"}{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf> hg38.exon.bed
 ```
 
@@ -67,7 +67,7 @@ awk '{OFS="\t"}{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1
 
 gtf注释中不含intron，不过我们用bedtools从transcript里面减去exon就行了。
 
-```shell
+```bash
 bedtools subtract -a hg38.transcript.bed -b hg38.exon.bed -s > hg38.intron.bed
 ```
 
@@ -75,7 +75,7 @@ bedtools subtract -a hg38.transcript.bed -b hg38.exon.bed -s > hg38.intron.bed
 
 把上面的代码合在一起，写在一个脚本gtfparser.sh里面：
 
-```shell
+```bash
 #！/bin/sh
 GTF=$1
 PREFIX=$2
@@ -87,7 +87,7 @@ bedtools subtract -a $PREFIX.transcript.bed -b $PREFIX.exon.bed -s > $PREFIX.int
 
 跑起来：
 
-```sh
+```bash
 chmod +x gtfparser.sh
 ./gtfparser.sh gencode.v32.annotation.gtf hg38
 ```
@@ -102,7 +102,7 @@ chmod +x gtfparser.sh
 
 ### 使用方法
 
-```shell
+```bash
 python gtfparser.py 参数
 # 或者
 chmod +x gtfparse.py
@@ -113,37 +113,37 @@ chmod +x gtfparse.py
 
 这个很简单：
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf > hg38.bed12
 ```
 
 ### gtf转gene.bed6
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf --attribute gene_id --type gene --format bed6 > hg38.gene.bed
 ```
 
 ### gtf转exon.bed
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf --attribute gene_id --type exon --format bed6 > hg38.exon.bed
 ```
 
 ### gtf转intron.bed
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf --attribute transcript_id --type exon --format intron > hg38.intron.bed
 ```
 
 ### 提取gene_info
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf --attribute gene_id --type gene --format info > hg38.gene_info.tsv
 ```
 
 ### 提取transcript_info
 
-```shell
+```bash
 ./gtfparser.py gencode.v32.annotation.gtf --attribute transcript_id --type transcript --format info > hg38.transcript_info
 ```
 

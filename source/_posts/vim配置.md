@@ -33,7 +33,7 @@ cp vim-plug/plug.vim ~/.vim/autoload
 
   <!-- tab 通过gitee安装 -->
 
-```sh
+```bash
 git clone https://gitee.com/chenxinliang123/vim-plug && \
 mkdir -p ~/.vim/autoload && \
 cp vim-plug/plug.vim ~/.vim/autoload
@@ -59,7 +59,7 @@ cp memorandum/vimrc.txt ~/.vimrc
 
   <!-- tab 通过gitee -->
 
-```sh
+```bash
 git clone https://gitee.com/liqiming_whu/memorandum && \
 cp memorandum/vimrc.txt ~/.vimrc
 ```

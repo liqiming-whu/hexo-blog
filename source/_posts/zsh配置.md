@@ -64,7 +64,7 @@ ArchLinux用户直接```yay -S oh-my-zsh-git```，然后```cp /usr/share/oh-my-z
 {% tabs git安装ohmyzsh %}
   <!-- tab 通过git安装 -->
 
-```shell
+```bash
 cd ~ && \
 git clone https://github.com/ohmyzsh/ohmyzsh.git && \
 mv ohmyzsh .oh-my-zsh && \
@@ -117,7 +117,7 @@ plugins=(
 {% tabs 安装插件 %}
   <!-- tab 通过git安装 -->
 
-```shell
+```bash
 # 下载zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # 下载zsh-autosuggestions
@@ -128,7 +128,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.
 
   <!-- tab 通过gitee安装 -->
 
-```shell
+```bash
 # 下载zsh-syntax-highlighting
 git clone https://gitee.com/gulei666/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # 下载zsh-autosuggestions
