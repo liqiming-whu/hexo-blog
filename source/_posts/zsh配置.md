@@ -46,7 +46,7 @@ sudo apt install zsh  # 以ubuntu为例
 
 ### 3.安装oh-my-zsh
 
-ArchLinux用户直接```yay -S oh-my-zsh-git```就完了。
+ArchLinux用户直接```yay -S oh-my-zsh-git```，然后```cp /usr/share/oh-my-zsh/zshrc ~/.zshrc```就完了。
 
 {% tabs 安装ohmyzsh %}
   <!-- tab 通过curl安装 -->
