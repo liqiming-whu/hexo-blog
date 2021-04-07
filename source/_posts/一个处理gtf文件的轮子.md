@@ -60,7 +60,7 @@ awk -v OFS="\t" '{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print
 严格来说，exon和intron是transcript的基本单位，第三列要用transcript_id。
 
 ```bash
-awk OFS="\t" '{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.exon.bed
+awk -v OFS="\t" '{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.exon.bed
 ```
 
 ### gtf转intron.bed
