@@ -437,13 +437,10 @@ footer:
   owner:
     enable: true
     since: 2021
-  custom_text: 本站部署于中国大陆，请勿发布违反国家法律信息
+  custom_text:
+    本站部署于中国大陆，请勿发布违反国家法律信息。<br>
+    <a href="https://beian.miit.gov.cn/"><img class="icp-icon" src="/pic/icp.png"><span>备案号：鄂ICP备2020017072号</span></a>
   copyright: true # Copyright of theme and framework
-  ICP: # Chinese ICP License
-    enable: true
-    url: http://www.beian.miit.gov.cn/
-    text: 鄂ICP备2020017072号
-    icon: /pic/icp.png
 
 # Analysis
 # --------------------------------------
