@@ -1,5 +1,5 @@
 ---
-title: gtf文件转成bed文件以及一个处理gtf的轮子
+title: gtf转bed，提取intron.bed以及一个处理gtf的轮子
 date: 2021-04-06 16:53:37
 tags:
   - 原创
@@ -42,17 +42,17 @@ awk '{if($3=="gene")print $0" transcript_id \"\";"}' gencode.v32.annotation.gtf 
 也可以不装bedops，会稍微麻烦一点：
 
 ```bash
-awk '{OFS="\t"}{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.gene.bed
+awk -v OFS="\t" '{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.gene.bed
 ```
 
-可以用```diff bed1 bed2```检查一下两种方式是不是一样的。
+可以把这两种方法的结果用sort排序生成bed1和bed2，然后用```diff bed1 bed2```检查一下是不是一样的。
 
 ### gtf转transcript.bed
 
 gtf转transcript不能用convert2bed了，convert2bed转出来的第三列是gene_id，我们要的是transcript_id。
 
 ```bash
-awk '{OFS="\t"}{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.transcript.bed
+awk -v OFS="\t" '{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.transcript.bed
 ```
 
 ### gtf转exon.bed
@@ -60,15 +60,26 @@ awk '{OFS="\t"}{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $
 严格来说，exon和intron是transcript的基本单位，第三列要用transcript_id。
 
 ```bash
-awk '{OFS="\t"}{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf> hg38.exon.bed
+awk OFS="\t" '{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.exon.bed
 ```
 
 ### gtf转intron.bed
 
-gtf注释中不含intron，不过我们用bedtools从transcript里面减去exon就行了。
+gtf注释中不含intron，不过我们用bedtools从transcript里面减去exon，剩下的就是intron，也可以直接取bed12的前6列作为transcript。
+
+但是不能直接取差集，为什么呢？因为bedtools只会根据前3列和strand列取差集，不会管第4列的transcipt_id。
+
+不同的transcript之间的exon不能相减，因为有可变剪接，在这个transcript里面的exon可能在另一个transcript里面就不一定是exon了。
+
+网上有教程在直接取差集出错了不仔细思考原因，居然还把transcript和exon合并再取差集，我笑了，你到底懂不懂什么是transcript啊，你知不知道为什么ucsc的bed12文件第四列为什么是transcript_id啊？
+
+但是我们还是能用bedtools，只要把bed6第1列和第4列颠倒就行了
 
 ```bash
-bedtools subtract -a hg38.transcript.bed -b hg38.exon.bed -s > hg38.intron.bed
+awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' hg38.transcript.bed > transcript.reverse.bed && \
+awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' hg38.exon.bed > exon.reverse.bed && \
+bedtools subtract -a transcript.reverse.bed -b exon.reverse.bed -s | awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' > hg38.intron.bed && \
+rm transcript.reverse.bed exon.reverse.bed
 ```
 
 ---
@@ -79,10 +90,13 @@ bedtools subtract -a hg38.transcript.bed -b hg38.exon.bed -s > hg38.intron.bed
 #！/bin/sh
 GTF=$1
 PREFIX=$2
-awk '{OFS="\t"}{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF > $PREFIX.gene.bed
-awk '{OFS="\t"}{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF > $PREFIX.transcript.bed
-awk '{OFS="\t"}{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF> $PREFIX.exon.bed
-bedtools subtract -a $PREFIX.transcript.bed -b $PREFIX.exon.bed -s > $PREFIX.intron.bed
+awk -v OFS="\t" '{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF > $PREFIX.gene.bed
+awk -v OFS="\t" '{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF > $PREFIX.transcript.bed
+awk -v OFS="\t" '{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' $GTF > $PREFIX.exon.bed
+awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' $PREFIX.transcript.bed > transcript.reverse.bed && \
+awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' $PREFIX.exon.bed > exon.reverse.bed && \
+bedtools subtract -a transcript.reverse.bed -b exon.reverse.bed -s | awk -v OFS="\t" '{print $4,$2,$3,$1,$5,$6}' > $PREFIX.intron.bed && \
+rm transcript.reverse.bed exon.reverse.bed
 ```
 
 跑起来：
