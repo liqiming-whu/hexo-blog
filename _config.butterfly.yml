@@ -442,7 +442,7 @@ footer:
   ICP: # Chinese ICP License
     enable: true
     url: http://www.beian.miit.gov.cn/
-    text:
+    text: 鄂ICP备2020017072号
     icon: /pic/icp.png
 
 # Analysis
