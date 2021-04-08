@@ -4,7 +4,9 @@ date: 2021-04-06 16:53:37
 tags:
   - 原创
   - 生信
-categories: python
+categories:
+  - [python]
+  - [生信入门]
 description: 如果你只需要把gtf转成bed12，下载ucsc的两个软件genePredToBed，gtfToGenePred一行代码就完事了。如果你想看看怎么用python实现它，可以看看这个。
 ---
 
