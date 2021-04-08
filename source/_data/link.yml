@@ -1,9 +1,9 @@
 - class_name: 友情链接
   class_desc: 那些人，那些事
   link_list:
-    - name: Venusleeyous的生信技能树
+    - name: Venusleeyous
       link: https://venuslee.vercel.app/
-      avatar: https://venuslee.vercel.app/img/tx.jpg
+      avatar: https://venuslee.vercel.app/pic/tx.jpg
       descr: 作者
     - name: JerryC
       link: https://jerryc.me/
