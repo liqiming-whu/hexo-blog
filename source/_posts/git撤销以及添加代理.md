@@ -35,7 +35,7 @@ git reset HEAD^  # 此时代码保留，回到 git add 之前
 
 ### 已经push，希望回滚到上一个版本
 
-1. 通过git reset直接删除指定的commit
+* 通过git reset直接删除指定的commit
 
 ```bash
 git log # 得到你需要回退一次提交的commit id
@@ -43,7 +43,7 @@ git reset --hard <commit_id>
 git push origin HEAD --force # 强制提交一次，之前提交就从远程仓库删除
 ```
 
-2. 通过git revert是用一次新的commit来回滚之前的commit
+* 通过git revert是用一次新的commit来回滚之前的commit
 
 ```bash
 git log # 得到你需要回退一次提交的commit id

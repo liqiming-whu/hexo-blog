@@ -51,7 +51,7 @@ awk -v OFS="\t" '{if($3=="gene"){match($0,/gene_id "(\S*)"/,a);print $1,$4-1,$5,
 
 ### gtf转transcript.bed
 
-gtf转transcript不能用convert2bed了，convert2bed转出来的第三列是gene_id，我们要的是transcript_id。
+gtf转transcript不能用convert2bed了，convert2bed转出来的第4列是gene_id，我们要的是transcript_id。
 
 ```bash
 awk -v OFS="\t" '{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.transcript.bed
@@ -59,7 +59,7 @@ awk -v OFS="\t" '{if($3=="transcript"){match($0,/transcript_id "(\S*)"/,a);print
 
 ### gtf转exon.bed
 
-严格来说，exon和intron是transcript的基本单位，第三列要用transcript_id。
+严格来说，exon和intron是transcript的基本单位，第4列要用transcript_id。
 
 ```bash
 awk -v OFS="\t" '{if($3=="exon"){match($0,/transcript_id "(\S*)"/,a);print $1,$4-1,$5,a[1],$6,$7}}' gencode.v32.annotation.gtf > hg38.exon.bed
