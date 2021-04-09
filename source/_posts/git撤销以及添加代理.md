@@ -55,10 +55,18 @@ git reset是回到某次提交，提交及之前的commit都会被保留，但�
 
 ## git添加代理
 
+参考[git config文档](http://git-scm.com/docs/git-config/en)，查找```http.proxy```和```remote.<name>.proxy```设置。
+
 ```bash
-git config --global --add remote.origin.proxy <代理地址> # 添加代理
+git config -l # 显示配置
+git config --global --add http.proxy <代理地址> # 添加代理，不需要设置https.proxy
+git config --global --add http.proxy 127.0.0.1:8889
+git config --global --unset http.proxy # 取消代理
+git config --global --unset-all http.proxy # 取消全部
+# 假设您有一个名为“origin”的远程服务器，那么可以用来绕过该远程服务器的代理的命令是:
 git config --global --add remote.origin.proxy 127.0.0.1:8889
-git config --global --unset remote.origin.proxy # 取消代理
+git config --global --unset remote.origin.proxy
+git config --global --unset-all remote.origin.proxy
 ```
 
 ## wget设置代理
