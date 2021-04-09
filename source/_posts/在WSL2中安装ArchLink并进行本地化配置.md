@@ -3,7 +3,7 @@ title: 在WSL2中安装ArchLinux并进行本地化配置
 date: 2021-04-09 19:44:31
 tags: 转载
 categories: windows
-description: 微软商店没有ArchLInux版本的WSL，不过我们可以使用LxRunOffline安装。
+description: 微软商店没有ArchLinux官方版本的WSL，不过我们可以使用LxRunOffline安装。
 ---
 
 ## 启用WSL
@@ -63,7 +63,7 @@ wsl --set-default-version 2
 
 找到[archlinux-bootstrap-2021.04.01-x86_64.tar.gz](https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/latest/archlinux-bootstrap-2021.04.01-x86_64.tar.gz) 。
 
-## 安装archlinux到WSL
+## 安装archlinux到WSL2
 
 命令1：
 
@@ -105,7 +105,7 @@ wsl -d ArchLinux
 
 在这里我们就进入了archlinux内部，然后以下操作在archlinux中进行
 
-删除`/etc/resolv.conf`文件，让埃archlinux自己生成resolve.conf文件
+删除`/etc/resolv.conf`文件，让archlinux自己生成resolve.conf文件
 
 执行命令
 
@@ -147,20 +147,20 @@ wsl -d ArchLinux
 pacman -S vim
 ```
 
-执行：
+编辑pacman配置文件：
 
 ```shell
 vim /etc/pacman.conf
 ```
 
-添加：
+在文件末尾添加：
 
 ```sh
 [archlinuxcn]
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 ```
 
-然后退出vim，执行：
+然后退出，编辑镜像源列表：
 
 ```shell
 vim /etc/pacman.d/mirrolist
@@ -169,6 +169,8 @@ vim /etc/pacman.d/mirrolist
 将China的源注释去掉（选择部分即可）
 
 ### 不会用vim的可以用资源管理器打开
+
+~~很难相信有人居然不会用vim~~
 
 在Arch中执行：
 
@@ -209,7 +211,7 @@ systemctl enable haveged
 
 如果`pacman -S archlinuxcn-keyring 报错`，删除gnupg，重建密钥：
 
-```sh
+```shell
 rm -rf /etc/pacman.d/gnupg
 pacman-key --init
 pacman-key --populate archlinux
@@ -239,7 +241,7 @@ passwd
 > 如果要临时使用其他编辑器，在该命令前加上`EDITOR`环境变量即可。例如，要使用 `nano`，用root运行以下命令：
 >
 > ```shell
-> # EDITOR=nano visudo
+> EDITOR=nano visudo
 > ```
 >
 > 要永久设置编辑器，请查看 [定义本地环境变量](https://wiki.archlinux.org/index.php/Environment_variables#Defining_variables).
@@ -295,7 +297,7 @@ zh_CN.UTF-8 UTF-8
 echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
 ```
 
-生成配置：
+生成语言配置：
 
 ```shell
 locale-gen 
@@ -321,7 +323,7 @@ fc-cache
 
 ## 设置使用普通用户登录Archlinux
 
-新建一个普通用户：
+新建一个普通用户并设置密码：
 
 ```shell
 useradd -m -G wheel -s /bin/bash <用户名>
@@ -334,7 +336,7 @@ passwd <用户名>
 id -u <用户名>
 ```
 
-退出Arch：
+退出ArchLinux：
 
 ```shell
 exit
@@ -372,6 +374,6 @@ LxRunOffline ui -n ArchLinux # LxRunOffline ui -n <你的archlinux名字>
 
 > [sudo pacman -S archlinuxcn-keyring 报错](https://blog.csdn.net/qq_30151813/article/details/89555259)
 
-> [pacman (简体中文)](https://wiki.archlinux.org/index.php/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Package_signing_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+> [Archwiki: pacman (简体中文)](https://wiki.archlinux.org/index.php/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Package_signing_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
 
-> [Sudo (简体中文)](https://wiki.archlinux.org/index.php/Sudo_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+> [Archwiki: Sudo (简体中文)](https://wiki.archlinux.org/index.php/Sudo_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
