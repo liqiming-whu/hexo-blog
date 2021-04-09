@@ -74,7 +74,7 @@ LxRunOffline i -n <自定义名称> -f <Arch镜像位置> -d <安装系统的位
 比如：
 
 ```
-LxRunOffline i -n ArchLinux -f C:\Users\19146\Downloads\archlinux-bootstrap-2021.04.01-x86_64.tar.gz -d C:\Users\19146\Linux -r root.x86_64
+LxRunOffline i -n ArchLinux -f C:\Users\19146\Downloads\archlinux-bootstrap-2021.04.01-x86_64.tar.gz -d C:\Users\19146\ArchLinux -r root.x86_64
 ```
 
 命令2：
