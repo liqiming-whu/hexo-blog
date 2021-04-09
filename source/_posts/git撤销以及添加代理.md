@@ -1,5 +1,5 @@
 ---
-title: git撤销以，添加代理以及wget设置代理
+title: git撤销操作，添加代理以及wget设置代理
 date: 2021-04-09 11:14:38
 tags: 转载
 categories: linux
