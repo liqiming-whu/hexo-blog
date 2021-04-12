@@ -27,6 +27,8 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
 
+**执行完毕后重启**。
+
 **需要在BIOS中开启虚拟化，Intel CPU开启VT选项，AMD CPU开启SVM选项。**
 
 ## 下载Linux内核升级包
