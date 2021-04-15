@@ -12,11 +12,11 @@ description: 输入bam文件，输出两列，一列是fragment的长度，一�
 
 [RSeQC](https://github.com/MonashBioinformaticsPlatform/RSeQC)的[RNA_fragment_size.py](https://github.com/MonashBioinformaticsPlatform/RSeQC/blob/master/rseqc/modules/RNA_fragment_size.py)虽然可以统计fragments的长度，但只能输出每个比对到每个基因的片段的均值，中位数等信息：
 
-> calculate fragment size for each gene/transcript. For each transcript/gene, it Will report:
-> 1) # of fragment that was used.
-> 2) mean of fragment size
-> 3) median of fragment size
-> 4) stdev of fragment size
+> `calculate fragment size for each gene/transcript. For each transcript/gene, it Will report:`
+> `1) # of fragment that was used.`
+> `2) mean of fragment size`
+> `3) median of fragment size`
+> `4) stdev of fragment size`
 
 所以我在它的基础上整了一个烂活，可以统计fragment的长度，方便生成长度分布直方图。
 
@@ -107,18 +107,18 @@ def fragment_size(bedfile, samfile, qcut=30, ncut=1, temp=os.devnull):
 
 		frag_sizes = []
 		for aligned_read in alignedReads:
-			if not aligned_read.is_paired:				#skip single sequencing
+			if not aligned_read.is_paired:	#skip single sequencing
 				continue
 			if aligned_read.is_read2:
 				continue
 			if aligned_read.mate_is_unmapped:
 				continue
 			if aligned_read.is_qcfail:
-				continue                                #skip low quanlity
+				continue                    #skip low quanlity
 			if aligned_read.is_duplicate:
-				continue                                #skip duplicate read
+				continue                    #skip duplicate read
 			if aligned_read.is_secondary:
-				continue                                #skip non primary hit
+				continue                    #skip non primary hit
 			if aligned_read.mapq < qcut:
 				continue
 
