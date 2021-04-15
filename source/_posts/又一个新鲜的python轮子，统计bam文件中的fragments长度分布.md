@@ -176,7 +176,7 @@ if __name__ == "__main__":
 
     frag_sizes_df = pd.DataFrame(
         {"Length": fragment_sizes.keys(), "Count": fragment_sizes.values()})
-    frag_sizes_df.sort_values(by="Length", ascending=True)
+    frag_sizes_df.sort_values(by="Length", ascending=True, inplace=True)
 
     if args.output_file:
         frag_sizes_df.to_csv(args.output_file, sep="\t",
@@ -185,5 +185,6 @@ if __name__ == "__main__":
         print("Length\tCount")
         for _, i in frag_sizes_df.iterrows():
             print(i["Length"], i["Count"], sep="\t")
+
 ```
 
