@@ -1,5 +1,5 @@
 ---
-title: 又一个新鲜的python轮子，统计bam文件中的fragments长度分布
+title: 又一个python轮子，统计bam文件中的fragments长度分布
 date: 2021-04-16 02:04:34
 tags:
   - 原创
@@ -51,7 +51,7 @@ optional arguments:
 讲人话就是：
 
 ```shell
-fragment_sizes.py -i $bam文件 -r $bed12 -o $输出文件 -t $缓存文件
+./fragment_sizes.py -i $bam文件 -r $bed12 -o $输出文件 -t $缓存文件
 ```
 
 输出文件-o可以不加，然后输出就会打印到标准输出。缓存文件-t实际上就是每一行一个fragment的长度，也可以不加，支持gzip压缩格式，后缀加“.gz"就行了。
