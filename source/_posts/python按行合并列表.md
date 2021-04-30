@@ -3,7 +3,7 @@ title: python将列表按指定的列去重，并合并其它行的内容
 date: 2021-04-29 17:46:23
 tags: 原创
 categories: python
-description: pandas的drop_duplicates在按某列去重时，其他列每组只能保留其中一行。如何想要把这一组的所有内容合并在一行，就是本文重点解决的问题。
+description: pandas的drop_duplicates在按某列去重时，其他列每组只能保留其中一行。如何把这一组的若干行合并在一行，是本文主要解决的问题。
 ---
 
 pandas的去重方法`df.drop_duplicates(subset=keys, keep='first')`在按某列去重时，其他列每组只能保留其中一行。如何想要把这一组的所有内容合并在一行，或者进行简单的统计呢？我造了个轮子，以解决这个问题。
