@@ -169,6 +169,10 @@ chmod +x gtfparse.py
 
 ```python
 #!/usr/bin/env python3
+"""
+Convert GTF to bed12, bed6, intron and etc..
+Author: liqiming@whu.edu.cn
+"""
 import re
 import argparse
 from itertools import groupby

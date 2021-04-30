@@ -1,5 +1,5 @@
 ---
-title: 又一个python轮子，统计bam文件中的fragments长度分布
+title: 统计bam文件中的fragments长度分布
 date: 2021-04-16 02:04:34
 tags:
   - 原创
@@ -97,7 +97,6 @@ optional arguments:
 Calculate fragment sizes for mapped bam file.
 Author: liqiming@whu.edu.cn
 '''
-
 import os
 import re
 import sys
